@@ -4,7 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="Band_title">Band Color:</string>
     <string name="button_title">Calculate</string>
-    <string name="Answer_text">Test</string>
+    <string name="Answer_text"> </string>
 
     <string-array name="first_band_colors">
         <item>Band 1</item>
