@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                             double answer_value = (band1_int*10 + band2_int)*band3_value;
 
                             //Truncate so no floating-point errors occur.
-                            tolerance = Math.round(1000.0*band4_percent*answer_value)/1000.0;
+                            tolerance = Math.round(1.0E6*band4_percent*answer_value)/1.0E6;
                             
                             //Don't round whole number (contains decimals)
                             if (band3_color.equals("Gold") || band3_color.equals("Silver")){ 
