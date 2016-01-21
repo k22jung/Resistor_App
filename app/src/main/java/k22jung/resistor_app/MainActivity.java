@@ -308,10 +308,17 @@ public class MainActivity extends AppCompatActivity {
                                 || band3_color.equals("Band 3") || band4_color.equals("Band 4")){
                             answer_text.setText("\0");
                         } else {
-                            int answer_value = band1_int*10 + band2_int;
+                            double answer_value = (band1_int*10 + band2_int)*band3_value;
+                            tolerance = band4_percent*answer_value;
                             
+                            if (band3_color.equals("Gold") || band3_color.equals("Silver")){
+                                answer_text.setText(answer_value + ' ' + band3_char + "Ω  ± "
+                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + " Ω)"); //Incomplete
+                            } else {
+                                answer_text.setText(answer_value + ' ' + band3_char + "Ω  ± "
+                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + " Ω)")
+                            }
                             
-                            answer_text.setText(""); //Incomplete
                         }
 
                     }
