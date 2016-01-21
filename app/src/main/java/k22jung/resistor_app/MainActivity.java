@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
                 }
                 
-                band1_color = parent.getItemAtPosition(position);
+                band1_color = parent.getItemAtPosition(position).toString();
                 
                 /*String band1_color = "Band 1";
                 int band1_int = 0;*/
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
                 }
                         
-                band2_color = parent.getItemAtPosition(position);
+                band2_color = parent.getItemAtPosition(position).toString();
                 
                 /*String band2_color = "Band 2";
                 int band2_int = 0;*/
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
                 }
                 
-                band3_color = parent.getItemAtPosition(position);
+                band3_color = parent.getItemAtPosition(position).toString();
                 
                 /*String band3_color = "Band 3";
                 double band3_value = 1;
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
                 }
                 
-                band4_color = parent.getItemAtPosition(position);
+                band4_color = parent.getItemAtPosition(position).toString();
                 
                 /*String band4_color = "Band 4";
                  double band4_percent = 0;
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                         break; 
                     case "Gold":
                         band4_percent = 0.05;
-                        break
+                        break;
                     case "Silver":
                         band4_percent = 0.1;
                         break;
@@ -310,15 +310,18 @@ public class MainActivity extends AppCompatActivity {
                             answer_text.setText("\0"); 
                         } else {
                             double answer_value = (band1_int*10 + band2_int)*band3_value;
-                            tolerance = band4_percent*answer_value;
+
+                            //Truncate so no floating-point errors occur.
+                            tolerance = Math.round(1000.0*band4_percent*answer_value)/1000.0;
                             
                             //Don't round whole number (contains decimals)
                             if (band3_color.equals("Gold") || band3_color.equals("Silver")){ 
-                                answer_text.setText(answer_value + ' ' + band3_char + "Ω  ± "
-                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + "Ω)"); 
+                                answer_text.setText(Math.round(1000.0*answer_value)/1000.0 + " "
+                                        + band3_char + "Ω  ± " + 100*band4_percent + "% (" +
+                                        tolerance + " " + band3_char + "Ω)");
                             } else { //Round whole number (contains unwanted decimals)
-                                answer_text.setText(Math.round(answer_value) + ' ' + band3_char + 
-                                "Ω  ± " + 100*band4_percent + "% (" + tolerance + ' ' + band3_char
+                                answer_text.setText(Math.round(answer_value) + " " + band3_char +
+                                "Ω  ± " + 100*band4_percent + "% (" + tolerance + " " + band3_char
                                 + "Ω)");
                             }
                             
