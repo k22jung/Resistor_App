@@ -202,15 +202,15 @@ public class MainActivity extends AppCompatActivity {
                         break; 
                     case "Orange":
                         band3_value = 1;
-                        band3_char = 'K';
+                        band3_char = 'k';
                         break; 
                     case "Yellow":
                         band3_value = 10;
-                        band3_char = 'K';
+                        band3_char = 'k';
                         break; 
                     case "Green":
                         band3_value = 100;
-                        band3_char = 'K';
+                        band3_char = 'k';
                         break; 
                     case "Blue":
                         band3_value = 1;
@@ -304,19 +304,22 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {// Callback method (response of the click)
                         TextView answer_text = (TextView) findViewById(R.id.answer);
 
+                        //If colors are unselected, do not answer.
                         if (band1_color.equals("Band 1") || band2_color.equals("Band 2")
                                 || band3_color.equals("Band 3") || band4_color.equals("Band 4")){
-                            answer_text.setText("\0");
+                            answer_text.setText("\0"); 
                         } else {
                             double answer_value = (band1_int*10 + band2_int)*band3_value;
                             tolerance = band4_percent*answer_value;
                             
-                            if (band3_color.equals("Gold") || band3_color.equals("Silver")){
+                            //Don't round whole number (contains decimals)
+                            if (band3_color.equals("Gold") || band3_color.equals("Silver")){ 
                                 answer_text.setText(answer_value + ' ' + band3_char + "Ω  ± "
-                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + " Ω)"); //Incomplete
-                            } else {
-                                answer_text.setText(answer_value + ' ' + band3_char + "Ω  ± "
-                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + " Ω)")
+                                + 100*band4_percent + "% (" + tolerance + ' ' + band3_char + "Ω)"); 
+                            } else { //Round whole number (contains unwanted decimals)
+                                answer_text.setText(Math.round(answer_value) + ' ' + band3_char + 
+                                "Ω  ± " + 100*band4_percent + "% (" + tolerance + ' ' + band3_char
+                                + "Ω)");
                             }
                             
                         }
