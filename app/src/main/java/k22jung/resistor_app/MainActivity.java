@@ -1,3 +1,9 @@
+/*
+Kenneth Jung
+Mechatronics Engineering 
+k22jung@uwaterloo.ca
+*/
+
 package k22jung.resistor_app;
 
 import android.graphics.Color;
@@ -16,6 +22,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declare spinners, adapters, variables, and button
     Spinner spinner1;
     String band1_color = "Band 1";
     int band1_int = 0;
@@ -51,15 +58,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         //------------------------------------ BAND 1 ----------------------------------------------
         color1 = (ImageView) findViewById(R.id.color1);
 
         spinner1 = (Spinner) findViewById(R.id.band1);
-        adapter1 = ArrayAdapter.createFromResource(this,R.array.first_band_colors,
-                android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter1 = ArrayAdapter.createFromResource(this,R.array.first_band_colors, 
+                android.R.layout.simple_spinner_item); 
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
         spinner1.setAdapter(adapter1);
+        
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!parent.getItemAtPosition(position).equals("Band 1")) {
@@ -68,13 +78,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 
                 band1_color = parent.getItemAtPosition(position).toString();
-                
-                /*String band1_color = "Band 1";
-                int band1_int = 0;*/
     
                 switch(band1_color) {
-                    case "Band 1":
-                        color1.setBackgroundColor(Color.parseColor("#00000000"));
+                    case "Band 1": // Unselected (Transparent) 
+                        color1.setBackgroundColor(Color.parseColor("#00000000")); 
                         break;
                     case "Black":
                         band1_int = 0;
@@ -135,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter2);
+        
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!parent.getItemAtPosition(position).equals("Band 2")) {
@@ -145,11 +154,8 @@ public class MainActivity extends AppCompatActivity {
                         
                 band2_color = parent.getItemAtPosition(position).toString();
                 
-                /*String band2_color = "Band 2";
-                int band2_int = 0;*/
-                
                 switch(band2_color) {
-                    case "Band 2":
+                    case "Band 2": // Unselected (Transparent) 
                         color2.setBackgroundColor(Color.parseColor("#00000000"));
                         break;
                     case "Black":
@@ -211,7 +217,9 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(adapter3);
+        
         spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!parent.getItemAtPosition(position).equals("Band 3")) {
@@ -221,12 +229,8 @@ public class MainActivity extends AppCompatActivity {
                 
                 band3_color = parent.getItemAtPosition(position).toString();
                 
-                /*String band3_color = "Band 3";
-                double band3_value = 1;
-                char band3_char = '\0';*/
-                
                 switch(band3_color) {
-                    case "Band 3":
+                    case "Band 3": // Unselected (Transparent) 
                         color3.setBackgroundColor(Color.parseColor("#00000000"));
                         break;
                     case "Black":
@@ -298,7 +302,9 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item);
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner4.setAdapter(adapter4);
+        
         spinner4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -308,13 +314,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 
                 band4_color = parent.getItemAtPosition(position).toString();
-                
-                /*String band4_color = "Band 4";
-                 double band4_percent = 0;
-                 double tolerance = 0;*/
     
                 switch(band4_color) {
-                    case "Band 4":
+                    case "Band 4": // Unselected (Transparent) 
                         color4.setBackgroundColor(Color.parseColor("#00000000"));
                         break;
                     case "Brown":
@@ -363,27 +365,27 @@ public class MainActivity extends AppCompatActivity {
 
         button = (Button)findViewById(R.id.button);
 
-        button.setOnClickListener( //Event listener
+        button.setOnClickListener( // Event listener
                 new Button.OnClickListener() { // Interface
-                    public void onClick(View v) {// Callback method (response of the click)
+                    public void onClick(View v) { // Callback method (response of the click)
                         TextView answer_text = (TextView) findViewById(R.id.answer);
 
-                        //If colors are unselected, do not answer.
+                        // If colors are unselected, do not answer.
                         if (band1_color.equals("Band 1") || band2_color.equals("Band 2")
                                 || band3_color.equals("Band 3") || band4_color.equals("Band 4")){
                             answer_text.setText("\0"); 
                         } else {
                             double answer_value = (band1_int*10 + band2_int)*band3_value;
 
-                            //Truncate so no floating-point errors occur.
+                            // Truncate so no floating-point errors occur.
                             tolerance = Math.round(1.0E6*band4_percent*answer_value)/1.0E6;
                             
-                            //Don't round whole number (contains decimals)
+                            // Don't round whole number (multiplier contains decimals).
                             if (band3_color.equals("Gold") || band3_color.equals("Silver")){ 
                                 answer_text.setText(Math.round(1000.0*answer_value)/1000.0 + " "
                                         + band3_char + "Ω  ± " + 100*band4_percent + "% (" +
                                         tolerance + " " + band3_char + "Ω)");
-                            } else { //Round whole number (contains unwanted decimals)
+                            } else { // Round whole number (contains unwanted decimals).
                                 answer_text.setText(Math.round(answer_value) + " " + band3_char +
                                 "Ω  ± " + 100*band4_percent + "% (" + tolerance + " " + band3_char
                                 + "Ω)");
